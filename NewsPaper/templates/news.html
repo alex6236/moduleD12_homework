@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% comment %} {% load custom_filters %} {% endcomment %}
+
+{% block title %} 
+    {{ news.title }}
+{% endblock title %}
+
+{% block content %}
+
+    <div class="header_top">
+        <h3>
+        Лента новостей
+        </h3>
+        
+        Публикаций на странице: {{news|length}}
+    </div>
+
+    {% include 'includes/post_list.html' %}
+    
+    {% include 'includes/paginator.html' %}
+
+{% endblock content %}
+

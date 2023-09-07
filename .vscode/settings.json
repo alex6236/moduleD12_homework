@@ -1,0 +1,12 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none",
+    "git.ignoreLimitWarning": true,
+    "python.analysis.extraPaths": [
+        "./NewsPaper"
+    ],
+    "search.useParentIgnoreFiles": true
+}

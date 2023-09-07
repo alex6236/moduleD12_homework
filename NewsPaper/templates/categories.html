@@ -1,0 +1,16 @@
+{% load categories_tags %}
+{% load cache %}
+
+{% cache 600 categories %}
+{% block cat %}
+    <div class="categry_header">
+        {% for category in cats %}
+            <div class="category_menu">
+                <a href="{{ category.get_absolute_url }}" class="category_menu_link">{{ category.name|trans_category }}</a>
+            </div>
+            {% endfor%}
+        </div>
+        
+{% endblock cat %} 
+{% endcache %}
+        

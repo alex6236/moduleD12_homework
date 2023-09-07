@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% load categories_tags %}
+
+{% block title %} 
+    Добавить статью
+{% endblock title %}
+
+{% block content %}
+    <div  class="header_top">
+        <h3>Добавить новую статью</h3>
+    </div>
+    <form action="{% url 'add_post' %}" method="POST" class="add_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="author" value="{{ user.id }}">
+        <button type="submit" class="btn btn-secondary btn-lg">Добавить</button>
+    </form>
+{% endblock content %}

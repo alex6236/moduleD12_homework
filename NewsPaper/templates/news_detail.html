@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% load custom_filters %}
+{% comment %} {% load subscribe_tags %} {% endcomment %}
+ 
+{% block title %}
+{{ news_detail.title|censor }}
+{% endblock title %}
+ 
+{% block content %}
+
+
+    <div class="header_top">
+        <h5 class="upper">{{ news_detail.title|censor }}</h5>
+        {{ news_detail.dataCreation }}
+    </div>
+    <div class="block_text">
+        <p class="text_news">{{ news_detail.text|censor }}</p>
+    </div>
+
+    {% if request.user.is_authenticated and news_detail.author|lower == request.user.username|lower %}
+    <div class="block_link">
+        <div class="edit_btn block_shadow">
+            <a class="edit_link" href="{% url 'edit_post' pk=news_detail.id %}">Редактировать</a>
+        </div>
+        <div class="delete_btn block_shadow">
+            <a class="delete_link link-body-emphasis" href="{% url 'delete_post' pk=news_detail.id %}">Удалить</a>
+        </div>
+    </div>
+    {% endif %}
+    
+{% endblock content %}

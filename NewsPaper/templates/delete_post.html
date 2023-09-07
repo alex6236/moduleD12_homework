@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <div class="header_top"><h4>Удалить публикацию</h4></div>
+  <div class="col-6 offset-md-2">
+    <form method="post">
+        <div class="deletion_block">
+        {% csrf_token %}
+        <p class="deletion_request">Вы уверены, что хотите удалить публикацию:</p>
+        <p class="deletion_request">"{{ post.title }}"</p>
+        <button type="submit" class="btn btn-danger">Удалить</button>
+      </div>
+    </form>
+  </div>
+
+{% endblock content %}

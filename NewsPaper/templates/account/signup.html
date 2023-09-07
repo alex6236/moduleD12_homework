@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+	<div class="col-md-6 offset-md-2">
+		<h3>Регистрация</h3>
+		<form id="signup_form" method="post" action="">
+			{% csrf_token %}
+
+			{% comment %} не полчилось заставить Django-allauth выводить поля в том
+			порядке который мне нужен пришлось настраивать через шаблон {% endcomment %}
+
+			<p>*Имя пользователя:{{ form.username }}</p> 
+			<p>Имя:{{ form.first_name }}</p>
+			<p>Фамилия:{{ form.last_name }}</p>
+			<p>*Электронная почта:{{ form.email }}</p>
+			<p>*Пароль:{{ form.password1 }}</p>
+			<p>*Повторить пароль:{{ form.password2 }}</p>
+			
+			<div class="d-grid gap-2">
+				<button class="btn btn-secondary" type="submit">Регистрация</button>
+			</div>
+		</form>
+	</div>
+
+{% endblock %}

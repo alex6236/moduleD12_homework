@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+{% block title %} 
+    Поиск по сайту
+{% endblock title %}
+{% block content %}
+<div class="header_top">
+    <h4>Результаты поиска</h4>
+    <a class="search_link" href="{% url 'search_site' %}">Расширенный поиск</a>
+</div>
+
+<div id="search_view"  class="search_view">
+    {% comment %} {% if results %} {% endcomment %}
+        {% for post in results %}
+        {% if post.title == 'lorem' %}
+        <div class="header_news" onclick="location.href='{% url 'lorem_post' pk=post.pk %}'">
+            <h5 class="upper">{% lorem 4 w random %}</h5>
+            {{post.dataCreation|date:'M d Y'}}
+        </div>
+        <p class="author">Автор: {{ post.author }}</p>
+        {% else %}
+        <div class="header_news" onclick="location.href='{% url 'news_detail' pk=post.pk %}'">
+            <h5 class="upper">{{ post.title }}</h5>
+            {{post.dataCreation|date:'M d Y'}}
+        </div>
+        <p class="author">Автор: {{ post.author }}</p>
+        {% endif %}
+        <div class="text_news">
+            {% if post.title == 'lorem' %}
+                {% lorem 30 w random %}
+                <a href="{% url 'lorem_post' pk=post.pk %}">Подробнее &raquo;</a>
+            {% else %}
+                {{ post.text|truncatewords:30 }}
+                <a href="{% url 'news_detail' pk=post.pk %}">Подробнее &raquo;</a>
+            {% endif %}
+        </div>
+
+        {% empty %}
+            <div class="noscreach">
+                <h4>Ничего не найдено</h4>
+            </div>
+        {% endfor %}   
+    {% comment %} {% else %}
+        <p>Ничего не найдено</p>    
+    {% endif %} {% endcomment %}
+</div>
+
+{% comment %} {% if is_paginated %} {% endcomment %}
+{% if results %}
+<div class="paginator">
+    <span class="arrow_links">
+        {% if results.has_previous %}<a href="?page=1{% if request.GET.q %}&q={{request.GET.q }}{% endif %}">Первая</a>
+            <a class="a_arrow" href="?page={{ results.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q }}{% endif %}">&#129144;</a>
+        {% else %}
+            <span class="page_end page_end_left">Первая &#129144</span>
+        {% endif %}
+    </span>
+    {% comment %} ======================= {% endcomment %}
+
+    {% comment %} {% for num in results.paginator.page_range %}
+        {% if results.number == num %}
+            <a class="num current_num">{{ num }}</a>
+        {% elif num > results.number|add:'-3' and num < results.number|add:'3' %}
+            <a class="num" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %} {% endcomment %}
+
+    {% comment %} ========================== {% endcomment %}
+
+    <span class="current_page">
+        {{ results.number }} / {{ results.paginator.num_pages }}
+    </span>
+    <span class="arrow_links">
+        {% if results.has_next %}
+            <a class="a_arrow" href="?page={{ results.next_page_number }}{% if request.GET.q %}&q={{request.GET.q }}{% endif %}">&#129146;</a>
+            <a class="a_arrow" href="?page={{ results.paginator.num_pages }}{% if request.GET.q %}&q={{request.GET.q }}{% endif %}">Последняя</a>
+        {% else %}
+            <span class="page_end">&#129146; Последняя</span>
+        {% endif %}
+    </span>
+</div>
+
+{% endif %}
+
+{% endblock content %}

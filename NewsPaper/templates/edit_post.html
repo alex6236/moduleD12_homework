@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <div  class="header_top"><h3>Редактировать запись</h3></div>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-secondary">Сохранить изменения</button>
+  </form>
+{% endblock %}

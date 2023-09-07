@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Регистрация
+{% endblock title %}
+
+{% block content %}
+<div class="col-md-6 offset-md-2 register_form">
+    <h3>Регистрация</h3>
+    <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-grid gap-2">
+    <input type="submit" class="btn btn-outline-success" value="Регистрация">
+</div>
+</form>
+</div>
+{% endblock content %}

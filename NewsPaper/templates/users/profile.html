@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+{% load categories_tags %}
+
+{% block content %}
+<div class="col-8">
+    <h3>
+    Профиль пользователя {{request.user.username}}
+    </h3>
+
+ 
+
+    {% if is_not_authors %}
+        <h5>Размещать публикации на сайте могут только автроры</h5>
+        <a class="btn btn-info" href="{% url 'users:upgrade' %}">
+          Стать автором
+          </a>
+    {% else %}
+        <h5>Вы состоите в группе "Автор"</h5>
+     {% endif %}
+
+    
+    <table class="table table-striped" style="margin-top: 30px;" >
+        <tr>
+          <td>Имя пользователя</td>
+          <td>{{ request.user.username }}</td>
+        </tr>
+        <tr>
+          <td>Имя</td>
+          <td>{{ request.user.first_name }}</td>
+        </tr>
+        <tr>
+          <td>Фамилия</td>
+          <td>{{ request.user.last_name }}</td>
+        </tr>
+        <tr>
+          <td>Электронная почта</td>
+          <td>{{ request.user.email }}</td>
+        </tr>
+        </tr>
+        <td>Подписка на категории</td>
+          <td>
+              {% if subscribed_categories %}
+                <ul>
+                {% for category in subscribed_categories %}
+                    <li>{{ category.name|trans_category|upper }}</li>
+                {% endfor %}
+                </ul>
+              {% else %}
+                Нет подписок на категории
+              {% endif %}
+          </td>
+      </tr>
+  </table>
+        
+    </table>
+      
+      <a class="btn btn-primary" href="/signup/logout/">Выйти</a>
+      <a class="btn btn-primary" href="{% url 'account_change_password' %}">Сменить пароль</a>
+      {% comment %} <a class="btn btn-primary" href="/accounts/password/change/">Сменить пароль</a> {% endcomment %}
+</div>
+
+{% endblock content %}

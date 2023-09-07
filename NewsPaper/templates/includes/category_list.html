@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    {% load custom_filters %}
+    {% block category_list %}
+
+    {% comment %} {% if posts %}
+    {% for n in posts %} {% endcomment %}
+    {% if page_obj %}
+        {% for n in page_obj %}
+            {% if n.title == 'lorem' %}
+            <div class="header_news" onclick="location.href='{% url 'lorem_post' pk=n.pk %}'">
+                <h5 class="upper">{% lorem 4 w random %}</h5>
+                {{n.dataCreation|date:'M d Y'}}
+            </div>
+            <p class="author">Автор: <b>{{ n.author }}</b></p>
+            {% else %}
+            <div class="header_news" onclick="location.href='{% url 'news_detail' pk=n.pk %}'">
+                <h5 class="upper">{{ n.title|censor }}</h5>
+                {{n.dataCreation|date:'M d Y'}}
+            </div>
+            <p class="author">Автор: <b>{{ n.author }}</b></p>
+    
+        {% endif %}
+
+        <div class="text_news">
+        {% if n.title == 'lorem' %}
+            {% lorem 30 w random %}
+            <a href="{% url 'lorem_post' pk=n.pk %}">Подробнее &raquo;</a>
+        {% else %}
+            {{ n.text|truncatewords:25|censor }}
+            <a href="{% url 'news_detail' pk=n.pk %}">Подробнее &raquo;</a>
+        {% endif %}
+        </div>
+    {% endfor %}
+    {% else %}
+        <h3 style="margin: 20px 40px; font-family: Arial, Helvetica, sans-serif">
+            новостей нет
+        </h3>
+    {% endif %}
+        
+{% endblock category_list %}
+    
+</body>
+</html>

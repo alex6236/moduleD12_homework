@@ -1,0 +1,67 @@
+{% extends "index.html" %}
+{% comment %} {% load account socialaccount %}  {% endcomment %}
+
+{% block content %}
+
+<div class="col-md-6 offset-md-2">
+
+    <h3 class="h3">Вход</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+
+        <div class="d-grid gap-2">
+            <button  class=" btn btn-outline-primary " type="submit">Войти</button>
+            <a  class=" btn btn-outline-dark" href="{% url 'account_reset_password' %}">Забыли пароль?</a>
+        </div>
+        
+        <h6>Войти с...</h6>
+    </form>
+
+    {% load account socialaccount %}
+
+        {% get_providers as socialaccount_providers %}
+        <div >
+        {% for provider in socialaccount_providers %}
+            <div class="d-grid" style="margin-bottom: 7px;">
+                <a title="{{provider.name}}" class="btn btn-outline-dark" 
+                 href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{provider.name}}"></i>{{provider.name}}</a>
+            </div>
+        {% endfor %}
+        </div>
+    
+
+</div>
+
+{% endblock content %} 
+
+{% comment %} <h2>
+ Войти в систему
+</h2>
+
+<form method="post" action="{% url 'signup:login_site' %}" class="py-3">
+
+    {% csrf_token %}
+
+    <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
+
+    <button type="submit" class="btn btn-primary">
+   Вход
+ </button>
+ <a class="btn btn-secondary" href="/accounts/google/login/"> Google </a>
+ 
+ </button>
+</form>
+
+<a class="btn btn-secondary" href="/signup/signup_site/"> Регистрация </a> {% endcomment %}

@@ -1,0 +1,33 @@
+{% extends 'index.html' %} 
+{% load custom_filters %}
+{% load categories_tags %}
+{% comment %} {% load subscribe_form_tags %} {% endcomment %}
+
+ 
+{% block title %}
+    {{ category.name }}
+{% endblock title %}
+ 
+{% block content %}  
+
+
+<div class="header_top">
+    <h4>
+        {{ category.name|trans_category|upper}}
+    </h4>
+
+    Публикаций на странице: {{posts|length}}
+</div>
+
+{% if not is_subscribed %}
+    <h5>Подписаться на новости в категории {{ category.name|trans_category }}</h5>
+    <a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm btn_margin">Подписаться</a>
+{% else %}
+    <h5>Вы уже подписаны на новости в этой категории</h5>
+    <a href="{% url 'unsubscribe' category.id %}" class="btn btn-secondary btn-sm btn_margin">Отписаться</a>
+{% endif %}
+
+{% include 'includes/category_list.html' %}
+{% include 'includes/paginator.html' %}
+
+{% endblock content %}

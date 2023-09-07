@@ -1,0 +1,15 @@
+{% load categories_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подписка</title>
+</head>
+<body>
+    <h2>Подписка на ногвости</h2>
+    <p>{{ user.username }}, вы успешно подписадись на новости в категории {{ category.name|trans_category }}</p>
+</body>
+</html>

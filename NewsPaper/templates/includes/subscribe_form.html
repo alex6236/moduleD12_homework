@@ -1,0 +1,9 @@
+
+
+{% block sub_form %}
+    <form  method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Подписаться</button>
+    </form>
+{% endblock sub_form %}

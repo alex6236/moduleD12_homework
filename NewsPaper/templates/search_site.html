@@ -1,0 +1,97 @@
+{% extends 'index.html' %}
+{% block title %} 
+    Поиск по сайту
+{% endblock title %}
+{% block content %}
+
+  <div class="container header_top">
+    <div class="col-lg-6 header_search_form">
+        <form id="search_form" action="{% url 'search_site' %}" method="GET">
+            <p>{{ date }}</p>
+            <p>{{ title }}</p>
+            <p>{{ username }}</p>
+            <p>{{ text }}</p>
+            <input id="search_btn" class="btn btn-outline-success" type="submit" value="Найти">
+        </form>
+    </div>
+    <div class="col-lg-6 header_search_title text-center">
+        <h3>Расширенный поиск</h3>
+    </div>
+</div>
+
+<div id="search_view"  class="search_view">
+    {% if results %}
+    {% for post in results %}
+        {% if post.title == 'lorem' %}
+			<div class="header_news" onclick="location.href='{% url 'lorem_post' pk=post.pk %}'">
+				<h5 class="upper">{% lorem 4 w random %}</h5>
+				{{post.dataCreation|date:'M d Y'}}
+			</div>
+        	<p class="author">Автор: {{ post.author }}</p>
+        {% else %}
+			<div class="header_news" onclick="location.href='{% url 'news_detail' pk=post.pk %}'">
+				<h5 class="upper">{{ post.title }}</h5>
+				{{post.dataCreation|date:'M d Y'}}
+			</div>
+        	<p class="author">Автор: {{ post.author }}</p>
+        {% endif %}
+        <div class="text_news">
+            {% if post.title == 'lorem' %}
+                {% lorem 30 w random %}
+                <a href="{% url 'lorem_post' pk=post.pk %}">Подробнее &raquo;</a>
+            {% else %}
+                {{ post.text|truncatewords:30 }}
+                <a href="{% url 'news_detail' pk=post.pk %}">Подробнее &raquo;</a>
+            {% endif %}
+        </div>
+
+        {% empty %}
+            <p>Нет результата попробуйте снова</p>
+        {% endfor %}
+    {% else %}   
+        <p>Нет результата попробуйте снова</p>
+    {% endif %}
+</div>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+{% comment %} {% block javascript %}
+<script>
+    const searchBtn = document.getElementById("search_btn");
+    const resultDiv = document.getElementById("result");
+    
+    searchBtn.addEventListener("click", ()=> {
+        resultDiv.innerHTML = "11111111111111111";
+        {% for post in filter.qs %}
+            const resultContainer = document.createElement("div");
+
+            const postDate = document.createElement("p");
+            postDate.textContent = "{{ post.dataCreation|date:'M d Y' }}";
+            resultDiv.appendChild(postDate);
+
+            const postTitle = document.createElement("p");
+            postTitle.textContent = "{{ post.title|title }}";
+            resultDiv.appendChild(postTitle);
+
+            const postAuthor = document.createElement("p");
+            postAuthor.textContent = "{{ post.author.authorUser.username }}";
+            resultDiv.appendChild(postAuthor);
+
+            resultsDiv.appendChild(resultContainer);
+        {% empty %}
+            const noResult = document.createElement("p");
+            noResult.textContent = "Ничего не найдено";
+            resultDiv.appendChild(noResult);
+        {% endfor %}
+    });
+</script>
+{% endblock javascript%} {% endcomment %}
+
+ 
